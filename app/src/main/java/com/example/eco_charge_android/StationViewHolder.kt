@@ -1,10 +1,13 @@
 package com.example.eco_charge_android
 
-import java.io.Serializable
+import android.view.View
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 
-data class Station(
-    val nOperateur: String,
-    val nEnseigne: String,
+class StationViewHolder(rootView: View) : RecyclerView.ViewHolder(rootView) {
+    // faire les findViewbyId
+    val txvName = rootView.findViewById<TextView>(R.id.r_station_txv_name)
+    /*val nEnseigne: String,
     val idStation: String,
     val nStation: String,
     val adStation: String,
@@ -17,6 +20,5 @@ data class Station(
     val geoPointBorne: GeoPointBorne,
     val codeInseeCommune: String,
     val region: String,
-    val departement: String
-): Serializable
-
+    val departement: String*/
+}

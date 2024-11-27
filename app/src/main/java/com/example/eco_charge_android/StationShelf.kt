@@ -11,8 +11,9 @@ class StationShelf {
         return storage[idStation] ?: throw Exception("Station not found")
     }
 
-    fun getAllStations(): List<Station> {
-        return storage.values.sortedBy { it.nStation }
+    fun getAllStations(): ArrayList<Station> {
+        return ArrayList(storage.values
+            .sortedBy { station -> station.nStation })
     }
 
     fun getStationsByRegion(region: String): List<Station> {
