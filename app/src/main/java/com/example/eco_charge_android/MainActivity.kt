@@ -1,9 +1,16 @@
 package com.example.eco_charge_android
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -12,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 const val SERVER_BASE_URL = "https://eco-charge.cleverapps.io"
 
-class MainActivity : AppCompatActivity(), StationCreator {
+class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private val retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
@@ -22,6 +29,21 @@ class MainActivity : AppCompatActivity(), StationCreator {
     private val stationService = retrofit.create(StationService::class.java)
     private val stationShelf = StationShelf()
 
+
+    private val btnListe: Button by lazy {
+        findViewById(R.id.liste_menu)
+    }
+    private var boolListe = true
+
+    private val btnMaps: Button by lazy {
+        findViewById(R.id.maps_menu)
+    }
+    private var boolMaps = false
+
+    private val btnInfo: Button by lazy {
+        findViewById(R.id.info_menu)
+    }
+    private var boolInfo = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +63,7 @@ class MainActivity : AppCompatActivity(), StationCreator {
                     Toast.makeText(baseContext, "Liste de stations récupérée", Toast.LENGTH_SHORT).show()
 
                     displayStationListFragment()
+
                 }
                 else if (allStations !== null  && allStations.isEmpty()) {
                     Log.e("debug","Liste de stations récupérée vide")
@@ -59,8 +82,32 @@ class MainActivity : AppCompatActivity(), StationCreator {
             }
         })
 
-    }
+        btnListe.setOnClickListener {
+            if (!boolListe) {
+                boolListe = true
+                boolMaps = false
+                boolInfo = false
+                displayStationListFragment()
+            }
+        }
+        btnMaps.setOnClickListener {
+            if (!boolMaps) {
+                boolListe = false
+                boolMaps = true
+                boolInfo = false
+                displayMapFragment()
+            }
+        }
+        btnInfo.setOnClickListener {
+            if (!boolInfo) {
+                boolListe = false
+                boolMaps = false
+                boolInfo = true
+            }
+        }
 
+
+    }
 
 
     private fun displayStationListFragment() {
@@ -71,7 +118,15 @@ class MainActivity : AppCompatActivity(), StationCreator {
         //btnCreateBook.visibility = View.VISIBLE
     }
 
-    override fun onStationCreated(station: Station) {
+    private fun displayMapFragment() {
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        val fragmentMap = FragmentMap.newInstance(stationShelf.getAllStations())
+        fragmentTransaction.replace(R.id.a_fragment_layout, fragmentMap)
+        fragmentTransaction.commit()
+        //btnCreateBook.visibility = View.VISIBLE
+    }
 
+    override fun onMapReady(p0: GoogleMap) {
+        TODO("Not yet implemented")
     }
 }
