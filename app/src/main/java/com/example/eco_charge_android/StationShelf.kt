@@ -7,16 +7,8 @@ class StationShelf {
         return storage.size
     }
 
-    fun getAll(): String {
-        var res = ""
-        for(b in storage.values) {
-            res += b.idStation + " " + b.adStation + " " + b.nStation + " " + b.region + " " + b.accessibilite + " " + b.accesRecharge + " " + b.n_operateur
-        }
-        return res
-    }
-
     fun addStation(station: Station) {
-        storage[station.idStation] = station
+        storage[station.id_station] = station
     }
 
     fun getStation(idStation: String): Station {
@@ -25,19 +17,19 @@ class StationShelf {
 
     fun getAllStations(): ArrayList<Station> {
         return ArrayList(storage.values
-            .sortedBy { station -> station.nStation })
+            .sortedBy { station -> station.n_station })
     }
 
     fun getStationsByRegion(region: String): List<Station> {
-        return storage.values.filter { it.region == region }.sortedBy { it.nStation }
+        return storage.values.filter { it.region == region }.sortedBy { it.n_station }
     }
 
     fun getStationsByDepartement(departement: String): List<Station> {
-        return storage.values.filter { it.departement == departement }.sortedBy { it.nStation }
+        return storage.values.filter { it.departement == departement }.sortedBy { it.n_station }
     }
 
     fun getStationsByOperator(operator: String): List<Station> {
-        return storage.values.filter { it.n_operateur == operator }.sortedBy { it.nStation }
+        return storage.values.filter { it.n_operateur == operator }.sortedBy { it.n_station }
     }
 
     fun getTotalNumberOfStations(): Int {
@@ -45,10 +37,10 @@ class StationShelf {
     }
 
     fun getStationsWithPowerAbove(minPower: Double): List<Station> {
-        return storage.values.filter { it.puissMax > minPower }.sortedByDescending { it.puissMax }
+        return storage.values.filter { it.puiss_max > minPower }.sortedByDescending { it.puiss_max }
     }
 
     fun getAccessibleStations(): List<Station> {
-        return storage.values.filter { it.accessibilite == "public" }.sortedBy { it.nStation }
+        return storage.values.filter { it.accessibilite == "public" }.sortedBy { it.n_station }
     }
 }
