@@ -3,7 +3,7 @@ package com.example.eco_charge_android
 import java.io.Serializable
 
 data class Station(
-    val nOperateur: String,
+    val n_operateur: String,
     val nEnseigne: String,
     val idStation: String,
     val nStation: String,

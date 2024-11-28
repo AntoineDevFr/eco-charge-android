@@ -3,6 +3,18 @@ package com.example.eco_charge_android
 class StationShelf {
     private val storage = mutableMapOf<String, Station>()
 
+    fun getSize(): Int {
+        return storage.size
+    }
+
+    fun getAll(): String {
+        var res = ""
+        for(b in storage.values) {
+            res += b.idStation + " " + b.adStation + " " + b.nStation + " " + b.region + " " + b.accessibilite + " " + b.accesRecharge + " " + b.n_operateur
+        }
+        return res
+    }
+
     fun addStation(station: Station) {
         storage[station.idStation] = station
     }
@@ -25,7 +37,7 @@ class StationShelf {
     }
 
     fun getStationsByOperator(operator: String): List<Station> {
-        return storage.values.filter { it.nOperateur == operator }.sortedBy { it.nStation }
+        return storage.values.filter { it.n_operateur == operator }.sortedBy { it.nStation }
     }
 
     fun getTotalNumberOfStations(): Int {

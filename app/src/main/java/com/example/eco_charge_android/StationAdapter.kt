@@ -14,7 +14,7 @@ class StationAdapter(private var stations: ArrayList<Station>) : RecyclerView.Ad
     override fun onBindViewHolder(holder: StationViewHolder, position: Int) {
         val station = stations[position]
         // à  faire
-        holder.txvName.text = station.nOperateur
+        holder.txvName.text = station.n_operateur
         /*holder.txvTitle.text = book.title
         holder.txvAuthor.text = book.author
         holder.txvDate.text = book.date*/
