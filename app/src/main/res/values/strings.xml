@@ -1,5 +1,19 @@
 <resources>
     <string name="app_name">eco-charge-android</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_enseigne">Enseigne :</string>
+    <string name="text_id">Id :</string>
+    <string name="text_operateur">Operateur :</string>
+    <string name="text_adresse">Adresse :</string>
+    <string name="text_insee">Code insee :</string>
+    <string name="text_pdc">Nombre de Prises :</string>
+    <string name="text_puissance">Puissance Max :</string>
+    <string name="text_unit">Kw</string>
+    <string name="text_type">Type prise :</string>
+    <string name="text_acces">Tarification :</string>
+    <string name="text_accessibilite">Accessibilite :</string>
+    <string name="text_insee_commune">Code insee commune :</string>
+    <string name="text_region">Region :</string>
+    <string name="text_departement">Departement :</string>
+
 </resources>
+
