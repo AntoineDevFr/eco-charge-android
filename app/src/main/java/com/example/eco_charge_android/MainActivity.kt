@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     private val stationService = retrofit.create(StationService::class.java)
     private val stationShelf = StationShelf()
 
-
     private val btnListe: Button by lazy {
         findViewById(R.id.liste_menu)
     }
@@ -57,6 +56,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         setContentView(R.layout.activity_main)
 
         supportMapFragment = SupportMapFragment.newInstance()
+        supportMapFragment.getMapAsync(this)
 
         stationService.getAllStations().enqueue(object : Callback<List<Station>> {
             override fun onResponse(
@@ -112,10 +112,9 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                 boolListe = false
                 boolMaps = false
                 boolInfo = true
+                displayInfoFragment()
             }
         }
-
-
     }
 
 
@@ -124,16 +123,20 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         val fragmentListe = FragmentListe.newInstance(stationShelf.getAllStations())
         fragmentTransaction.replace(R.id.a_fragment_layout, fragmentListe)
         fragmentTransaction.commit()
-        //btnCreateBook.visibility = View.VISIBLE
     }
 
     private fun displayMapFragment() {
-        supportFragmentManager.beginTransaction()
-            .add(R.id.a_fragment_layout, supportMapFragment)
-            .commit()
-
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.a_fragment_layout, supportMapFragment)
+        fragmentTransaction.commit()
         supportMapFragment.getMapAsync(this)
-        //btnCreateBook.visibility = View.VISIBLE
+    }
+
+    private fun displayInfoFragment() {
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        val fragmentInfo = FragmentInfo.newInstance(stationShelf.getAllStations())
+        fragmentTransaction.replace(R.id.a_fragment_layout, fragmentInfo)
+        fragmentTransaction.commit()
     }
 
     override fun onMapReady(mMap: GoogleMap) {
@@ -146,6 +149,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             )
         }
         mMap.moveCamera(CameraUpdateFactory.newLatLng(stationShelf.getAverageLatLng()))
-
+        mMap.uiSettings.isZoomControlsEnabled = true
+        mMap.setPadding(0,0,0,200)
     }
 }
