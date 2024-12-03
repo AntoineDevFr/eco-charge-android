@@ -1,6 +1,7 @@
 package com.example.eco_charge_android
 
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -8,6 +9,7 @@ import android.view.MenuItem
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -16,11 +18,16 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 
 const val SERVER_BASE_URL = "https://eco-charge.cleverapps.io"
 
+
 class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
+    private lateinit var supportMapFragment: SupportMapFragment
     private val retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
         .baseUrl(SERVER_BASE_URL)
@@ -48,6 +55,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        supportMapFragment = SupportMapFragment.newInstance()
 
         stationService.getAllStations().enqueue(object : Callback<List<Station>> {
             override fun onResponse(
@@ -119,14 +128,24 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun displayMapFragment() {
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        val fragmentMap = FragmentMap.newInstance(stationShelf.getAllStations())
-        fragmentTransaction.replace(R.id.a_fragment_layout, fragmentMap)
-        fragmentTransaction.commit()
+        supportFragmentManager.beginTransaction()
+            .add(R.id.a_fragment_layout, supportMapFragment)
+            .commit()
+
+        supportMapFragment.getMapAsync(this)
         //btnCreateBook.visibility = View.VISIBLE
     }
 
-    override fun onMapReady(p0: GoogleMap) {
-        TODO("Not yet implemented")
+    override fun onMapReady(mMap: GoogleMap) {
+        for(s:Station in stationShelf.getAllStations()) {
+            mMap.addMarker(
+                MarkerOptions()
+                    .position(LatLng(s.geo_point_borne.lat,s.geo_point_borne.lon))
+                    .title(s.n_station)
+                    .snippet("${s.code_insee}, " + s.accessibilite)
+            )
+        }
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(stationShelf.getAverageLatLng()))
+
     }
 }

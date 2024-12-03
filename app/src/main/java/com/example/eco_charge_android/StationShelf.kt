@@ -1,5 +1,7 @@
 package com.example.eco_charge_android
 
+import com.google.android.gms.maps.model.LatLng
+
 class StationShelf {
     private val storage = mutableMapOf<String, Station>()
 
@@ -9,6 +11,18 @@ class StationShelf {
 
     fun addStation(station: Station) {
         storage[station.id_station] = station
+    }
+
+    fun getAverageLatLng(): LatLng {
+        var lat = 0.0
+        var long = 0.0
+        var i = 0
+        for(s:Station in getAllStations()) {
+            lat+=s.geo_point_borne.lat
+            long+=s.geo_point_borne.lon
+            i++
+        }
+        return LatLng(lat/i,long/i)
     }
 
     fun getStation(idStation: String): Station {
