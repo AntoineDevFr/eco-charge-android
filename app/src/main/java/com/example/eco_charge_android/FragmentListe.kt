@@ -1,6 +1,7 @@
 package com.example.eco_charge_android
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -37,7 +38,13 @@ class FragmentListe : Fragment() {
         val rootView = inflater.inflate(R.layout.fragment_liste, container, false)
 
         recyclerView = rootView.findViewById(R.id.f_list_rcv_station)
-        stationAdapter = StationAdapter(stations)
+        stationAdapter = StationAdapter(stations) { station ->
+            val intent = Intent(context, DetailsStationActivity::class.java).apply {
+                putExtra("DATA_KEY", station)
+            }
+            startActivity(intent)
+        }
+
         recyclerView.adapter = stationAdapter
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.addItemDecoration(

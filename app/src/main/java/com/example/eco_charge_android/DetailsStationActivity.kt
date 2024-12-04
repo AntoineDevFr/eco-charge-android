@@ -27,7 +27,7 @@ class DetailsStationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details_station)
 
-        val station: Station = intent.getStringExtra("DATA_KEY") as Station
+        val station: Station = intent.getSerializableExtra("DATA_KEY") as Station
 
         n_station = findViewById(R.id.n_station)
         n_enseigne = findViewById(R.id.n_enseigne)

@@ -1,5 +1,6 @@
 package com.example.eco_charge_android
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
