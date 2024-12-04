@@ -3,15 +3,15 @@
     <string name="text_enseigne">Enseigne :</string>
     <string name="text_id">Id :</string>
     <string name="text_operateur">Operateur :</string>
-    <string name="text_adresse">Adresse :</string>
-    <string name="text_insee">Code insee :</string>
-    <string name="text_pdc">Nombre de Prises :</string>
+    <string name="text_adresse">Adresse</string>
+    <string name="text_insee">Insee :</string>
+    <string name="text_pdc">Nbr prises :</string>
     <string name="text_puissance">Puissance Max :</string>
     <string name="text_unit">Kw</string>
     <string name="text_type">Type prise :</string>
     <string name="text_acces">Tarification :</string>
-    <string name="text_accessibilite">Accessibilite :</string>
-    <string name="text_insee_commune">Code insee commune :</string>
+    <string name="text_accessibilite">Accessibilite</string>
+    <string name="text_insee_commune">Insee commune :</string>
     <string name="text_region">Region :</string>
     <string name="text_departement">Departement :</string>
     <string name="data_app_text">Lien des données : https://data.opendatasoft.com/explore/dataset/bornes-irve%40reseaux-energies-rte/table/?disjunctive.region&amp;disjunctive.departement&amp;sort=n_amenageur&amp;location=6,47.1449,-0.38452&amp;basemap=jawg.streets\n\nApplication crée dans un but éducatif par Antoine Banchet et Elliot Galaor\n\nGithub App : https://github.com/AntoineDevFr/eco-charge-android\nGithub Serveur : https://github.com/AntoineDevFr/eco-charge-web</string>
