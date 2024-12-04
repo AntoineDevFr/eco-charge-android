@@ -1,6 +1,7 @@
 package com.example.eco_charge_android
 
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -29,6 +30,7 @@ class DetailsStationActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var code_insee_commune: TextView
     private lateinit var region: TextView
     private lateinit var departement: TextView
+    private lateinit var imageview: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +58,7 @@ class DetailsStationActivity : AppCompatActivity(), OnMapReadyCallback {
         code_insee_commune = findViewById(R.id.code_insee_commune)
         region = findViewById(R.id.region)
         departement = findViewById(R.id.departement)
+        imageview = findViewById(R.id.imageView)
 
         n_station.text = station.n_station
         n_enseigne.text = station.n_enseigne
@@ -71,6 +74,9 @@ class DetailsStationActivity : AppCompatActivity(), OnMapReadyCallback {
         code_insee_commune.text = station.code_insee_commune ?: "N/A"
         region.text = station.region ?: "N/A"
         departement.text = station.departement ?: "N/A"
+
+
+        imageview.setImageResource(R.drawable.t2)
 
 
 

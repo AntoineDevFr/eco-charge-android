@@ -323,4 +323,14 @@
 
     </FrameLayout>
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="67dp"
+        android:layout_height="104dp"
+        app:layout_constraintBottom_toTopOf="@+id/f_map_details"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/accessibilite"
+        app:srcCompat="@drawable/chademo" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
