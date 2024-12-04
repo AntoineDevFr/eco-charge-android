@@ -4,23 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/r_station_txv_name"
-        android:layout_width="wrap_content"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:text="Nom Station"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textSize="24sp"
         app:layout_constraintEnd_toStartOf="@+id/r_image_like"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/imageView2"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,17 +47,17 @@
 
         <TextView
             android:id="@+id/r_station_txv_adresse"
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Adresse" />
 
         <TextView
             android:id="@+id/r_station_txv_info"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="TextView" />
+            android:text="Info" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
