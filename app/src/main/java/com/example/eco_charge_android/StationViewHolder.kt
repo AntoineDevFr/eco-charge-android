@@ -1,15 +1,17 @@
 package com.example.eco_charge_android
 
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class StationViewHolder(rootView: View) : RecyclerView.ViewHolder(rootView) {
     // faire les findViewbyId
     val txvName = rootView.findViewById<TextView>(R.id.r_station_txv_name)
-    /*val nEnseigne: String,
-    val idStation: String,
-    val nStation: String,
+    val txvAdresse = rootView.findViewById<TextView>(R.id.r_station_txv_adresse)
+    val txvInfo = rootView.findViewById<TextView>(R.id.r_station_txv_info)
+    val txvFavorite = rootView.findViewById<ImageView>(R.id.r_image_like)
+    /*val nStation: String,
     val adStation: String,
     val codeInsee: Int,
     val nbrePdc: Int,

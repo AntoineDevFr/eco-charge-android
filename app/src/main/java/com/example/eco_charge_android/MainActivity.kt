@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private val stationService = retrofit.create(StationService::class.java)
     private val stationShelf = StationShelf()
+    private val favoriteShelf = StationShelf()
 
     private val btnListe: Button by lazy {
         findViewById(R.id.liste_menu)
@@ -90,6 +91,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                 Toast.makeText(baseContext, "Erreur dans la récupération des stations", Toast.LENGTH_SHORT).show()
             }
         })
+
+        //stationService.getFavorites().enqueue()
 
         btnListe.setOnClickListener {
             if (!boolListe) {
@@ -148,7 +151,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                     .snippet("${s.code_insee}, " + s.accessibilite)
             )
         }
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(stationShelf.getAverageLatLng()))
+        mMap.moveCamera(CameraUpdateFactory.zoomTo(5F))
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(45.8475,2.5447)))
         mMap.uiSettings.isZoomControlsEnabled = true
         mMap.setPadding(0,0,0,200)
     }
