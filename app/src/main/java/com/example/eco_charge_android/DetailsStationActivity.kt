@@ -75,12 +75,27 @@ class DetailsStationActivity : AppCompatActivity(), OnMapReadyCallback {
         region.text = station.region ?: "N/A"
         departement.text = station.departement ?: "N/A"
 
-
-        imageview.setImageResource(R.drawable.t2)
-
-
-
-
+        if(station.type_prise == "COMBO") {
+            imageview.setImageResource(R.drawable.t2)
+        }
+        else if(station.type_prise == "T2-T3-EF" || station.type_prise == "T3-EF-T2" || station.type_prise == "EF-T2-T3") {
+            imageview.setImageResource(R.drawable.t2_t3_ef)
+        }
+        else if(station.type_prise == "CHADEMO" || station.type_prise == "Chademo") {
+            imageview.setImageResource(R.drawable.chademo)
+        }
+        else if(station.type_prise == "T2-E/F" || station.type_prise == "EF, T2" || station.type_prise == "EF - T2") {
+            imageview.setImageResource(R.drawable.t2_ef)
+        }
+        else if(station.type_prise == "T2") {
+            imageview.setImageResource(R.drawable.t2)
+        }
+        else if(station.type_prise == "T2P") {
+            imageview.setImageResource(R.drawable.t2p)
+        }
+        else {
+            imageview.setImageResource(R.drawable.ef)
+        }
     }
 
     override fun onMapReady(p0: GoogleMap) {
