@@ -6,8 +6,15 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 
-class DetailsStationActivity : AppCompatActivity() {
+class DetailsStationActivity : AppCompatActivity(), OnMapReadyCallback {
+    private lateinit var station: Station
     private lateinit var n_station: TextView
     private lateinit var n_enseigne: TextView
     private lateinit var id_station: TextView
@@ -27,7 +34,13 @@ class DetailsStationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details_station)
 
-        val station: Station = intent.getSerializableExtra("DATA_KEY") as Station
+        val supportMapFragment = SupportMapFragment.newInstance()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.f_map_details, supportMapFragment)
+            .commit()
+        supportMapFragment.getMapAsync(this)
+
+        station = intent.getSerializableExtra("DATA_KEY") as Station
 
         n_station = findViewById(R.id.n_station)
         n_enseigne = findViewById(R.id.n_enseigne)
@@ -62,5 +75,18 @@ class DetailsStationActivity : AppCompatActivity() {
 
 
 
+    }
+
+    override fun onMapReady(p0: GoogleMap) {
+        val position = LatLng(station.geo_point_borne.lat,station.geo_point_borne.lon)
+        p0.addMarker(
+            MarkerOptions()
+                .position(position)
+                .title(station.n_station)
+                .snippet("${station.code_insee}, " + station.accessibilite)
+        )
+        val zoomLevel = 18.0f // Niveau de zoom, entre 2.0 (monde) et 21.0 (rue)
+        val cameraUpdate = CameraUpdateFactory.newLatLngZoom(position, zoomLevel)
+        p0.moveCamera(cameraUpdate)
     }
 }
