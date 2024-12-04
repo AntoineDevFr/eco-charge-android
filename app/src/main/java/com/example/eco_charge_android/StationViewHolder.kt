@@ -11,6 +11,7 @@ class StationViewHolder(rootView: View) : RecyclerView.ViewHolder(rootView) {
     val txvAdresse = rootView.findViewById<TextView>(R.id.r_station_txv_adresse)
     val txvInfo = rootView.findViewById<TextView>(R.id.r_station_txv_info)
     val txvFavorite = rootView.findViewById<ImageView>(R.id.r_image_like)
+    val txvPrise = rootView.findViewById<ImageView>(R.id.imageView2)
     /*val nStation: String,
     val adStation: String,
     val codeInsee: Int,

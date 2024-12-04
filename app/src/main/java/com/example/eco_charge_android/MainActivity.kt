@@ -73,6 +73,10 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                     Log.e("debug","Liste de stations récupérée")
                     Toast.makeText(baseContext, "Liste de stations récupérée", Toast.LENGTH_SHORT).show()
 
+                    val res = stationShelf.getTypeStation()
+                    for(i:String in res) {
+                        Log.e("debug", i)
+                    }
                     displayStationListFragment()
 
                 }
@@ -92,6 +96,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                 Toast.makeText(baseContext, "Erreur dans la récupération des stations", Toast.LENGTH_SHORT).show()
             }
         })
+
 
         //stationService.getFavorites().enqueue()
 
