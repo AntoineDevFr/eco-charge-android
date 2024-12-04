@@ -2,6 +2,7 @@ package com.example.eco_charge_android
 
 import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -15,12 +16,10 @@ class StationAdapter(private var stations: ArrayList<Station>) : RecyclerView.Ad
 
     override fun onBindViewHolder(holder: StationViewHolder, position: Int) {
         val station = stations[position]
-        // à  faire
         holder.txvName.text = station.n_operateur
         holder.txvAdresse.text = station.ad_station
         val info = station.accessibilite + ", " + station.acces_recharge
         holder.txvInfo.text = info
-        //upholder.txvFavorite.setImageDrawable()
     }
 
     override fun getItemCount(): Int {
