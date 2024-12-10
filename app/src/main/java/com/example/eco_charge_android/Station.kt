@@ -17,6 +17,7 @@ data class Station(
     val geo_point_borne: GeoPointBorne,
     val code_insee_commune: String,
     val region: String,
-    val departement: String
+    val departement: String,
+    val favorite: Boolean
 ): Serializable
 

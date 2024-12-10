@@ -4,7 +4,7 @@ import com.google.android.gms.maps.model.LatLng
 
 class StationShelf {
     private val storage = mutableMapOf<String, Station>()
-    private val storageType = ArrayList<String>()
+    private val storageBool = ArrayList<String>()
 
     fun getSize(): Int {
         return storage.size
@@ -12,12 +12,14 @@ class StationShelf {
 
     fun addStation(station: Station) {
         storage[station.id_station] = station
-        storageType.add(station.type_prise)
+        storageBool.add(station.favorite.toString())
     }
 
-    fun getTypeStation(): ArrayList<String> {
-        return ArrayList(storageType.toSet())
+    fun getBoolStation(): ArrayList<String> {
+        return ArrayList(storageBool.toSet())
     }
+
+
 
     fun getStation(idStation: String): Station {
         return storage[idStation] ?: throw Exception("Station not found")

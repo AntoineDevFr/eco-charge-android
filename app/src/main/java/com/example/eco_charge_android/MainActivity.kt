@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                     Log.e("debug","Liste de stations récupérée")
                     Toast.makeText(baseContext, "Liste de stations récupérée", Toast.LENGTH_SHORT).show()
 
-                    val res = stationShelf.getTypeStation()
+                    val res = stationShelf.getBoolStation()
                     for(i:String in res) {
                         Log.e("debug", i)
                     }
