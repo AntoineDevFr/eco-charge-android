@@ -1,12 +1,16 @@
 package com.example.eco_charge_android
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -31,6 +35,27 @@ class FragmentListe : Fragment() {
         }
     }
 
+    private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val updatedStation = result.data?.getSerializableExtra(UPDATED_STATION) as Station
+            // Mise à jour de la station dans la liste
+            updateStationInList(updatedStation)
+        }
+    }
+
+    private fun updateStationInList(updatedStation: Station) {
+        // Trouver l'index de la station à mettre à jour
+        val index = stations.indexOfFirst { it.id_station == updatedStation.id_station }
+
+        if (index != -1) {
+            // Remplacer la station par la version mise à jour
+            stations[index] = updatedStation
+            // Notifier l'adaptateur de la mise à jour de l'élément
+            stationAdapter.notifyItemChanged(index)
+        }
+    }
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,7 +67,7 @@ class FragmentListe : Fragment() {
             val intent = Intent(context, DetailsStationActivity::class.java).apply {
                 putExtra("DATA_KEY", station)
             }
-            startActivity(intent)
+            startForResult.launch(intent)
         }
 
         recyclerView.adapter = stationAdapter

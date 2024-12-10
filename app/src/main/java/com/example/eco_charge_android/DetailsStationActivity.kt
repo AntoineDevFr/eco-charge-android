@@ -22,6 +22,8 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+val UPDATED_STATION = "CREATED_STATION"
+
 class DetailsStationActivity : AppCompatActivity(), OnMapReadyCallback {
     private val retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
@@ -47,6 +49,7 @@ class DetailsStationActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var departement: TextView
     private lateinit var imageview: ImageView
     private lateinit var btnAddFav: Button
+    private lateinit var imageLike: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,6 +79,7 @@ class DetailsStationActivity : AppCompatActivity(), OnMapReadyCallback {
         departement = findViewById(R.id.departement)
         imageview = findViewById(R.id.imageView)
         btnAddFav = findViewById(R.id.bt_ajouter_fav)
+        imageLike = findViewById(R.id.like_image)
 
         n_station.text = station.n_station
         n_enseigne.text = station.n_enseigne
@@ -91,6 +95,13 @@ class DetailsStationActivity : AppCompatActivity(), OnMapReadyCallback {
         code_insee_commune.text = station.code_insee_commune ?: "N/A"
         region.text = station.region ?: "N/A"
         departement.text = station.departement ?: "N/A"
+
+        val drawableRes = if (station.favorite) {
+            R.drawable.like
+        } else {
+            R.drawable.unlike
+        }
+        imageLike.setImageResource(drawableRes)
 
         if(station.type_prise == "COMBO") {
             imageview.setImageResource(R.drawable.t2)
@@ -114,21 +125,30 @@ class DetailsStationActivity : AppCompatActivity(), OnMapReadyCallback {
             imageview.setImageResource(R.drawable.ef)
         }
 
-        //Button add favorite
-        btnAddFav.setOnClickListener {
+        //Favorite
+        val toggleFavorite = {
             val isFavorite = !station.favorite
             val body = FavoriteRequest(isFavorite)
 
             stationService.toggleFavorite(station.id_station, body).enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                    Log.d("Retrofit", "Request URL: $SERVER_BASE_URL")
-                    Log.d("Retrofit", "Request Body: $body")
-                    Log.d("Retrofit", "Response Code: ${response.code()}")
-                    Log.d("Retrofit", "Response Message: ${response.message()}")
-
                     if (response.isSuccessful) {
+                        // Mise à jour du statut favori
                         station.favorite = isFavorite
+                        // Mise à jour de l'interface utilisateur
+                        val drawableRes = if (station.favorite) {
+                            R.drawable.like
+                        } else {
+                            R.drawable.unlike
+                        }
+                        imageLike.setImageResource(drawableRes)
+
                         Toast.makeText(baseContext, "Favori mis à jour avec succès", Toast.LENGTH_SHORT).show()
+
+                        // Retourner la station mise à jour à l'activité principale
+                        intent.putExtra(UPDATED_STATION, station)
+                        setResult(RESULT_OK, intent)
+                        //finish()
                     } else {
                         Toast.makeText(baseContext, "Erreur lors de la mise à jour", Toast.LENGTH_SHORT).show()
                     }
@@ -139,6 +159,14 @@ class DetailsStationActivity : AppCompatActivity(), OnMapReadyCallback {
                     Toast.makeText(baseContext, "Erreur réseau : ${t.message}", Toast.LENGTH_SHORT).show()
                 }
             })
+        }
+
+        btnAddFav.setOnClickListener {
+            toggleFavorite()
+        }
+
+        imageLike.setOnClickListener {
+            toggleFavorite()
         }
 
 
