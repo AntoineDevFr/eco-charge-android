@@ -1,8 +1,6 @@
 package com.example.eco_charge_android
 
-import android.content.Intent
-import android.graphics.Color
-import android.os.Build
+
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -10,18 +8,19 @@ import android.view.MenuItem
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+
 
 const val SERVER_BASE_URL = "https://eco-charge.cleverapps.io"
 
@@ -58,6 +57,10 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
         supportMapFragment = SupportMapFragment.newInstance()
         supportMapFragment.getMapAsync(this)
+
+        val toolbar: Toolbar = findViewById<Toolbar>(R.id.toolbar3)
+        toolbar.setTitle("")
+        setSupportActionBar(toolbar)
 
         stationService.getAllStations().enqueue(object : Callback<List<Station>> {
             override fun onResponse(
@@ -154,7 +157,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-        Log.e("debug","${super.onCreateOptionsMenu(menu)}")
         return true
     }
 
