@@ -3,7 +3,7 @@ package com.example.eco_charge_android
 import com.google.android.gms.maps.model.LatLng
 
 class StationShelf {
-    private val storage = mutableMapOf<String, Station>()
+    private var storage = mutableMapOf<String, Station>()
     private val storageBool = ArrayList<String>()
 
     fun getSize(): Int {
@@ -52,5 +52,9 @@ class StationShelf {
 
     fun getAccessibleStations(): List<Station> {
         return storage.values.filter { it.accessibilite == "public" }.sortedBy { it.n_station }
+    }
+
+    fun updateStorage(stations: MutableMap<String, Station>) {
+        storage = stations
     }
 }

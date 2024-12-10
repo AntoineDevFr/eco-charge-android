@@ -52,7 +52,12 @@ class FragmentListe : Fragment() {
             stations[index] = updatedStation
 
             stations.sortByDescending { it.favorite }
-            stationAdapter.notifyDataSetChanged()        }
+
+            (activity as? MainActivity)?.updateStationShelf(stations)
+
+            stationAdapter.notifyDataSetChanged()
+
+        }
     }
 
 

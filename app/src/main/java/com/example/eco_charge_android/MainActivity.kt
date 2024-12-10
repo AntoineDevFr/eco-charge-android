@@ -133,6 +133,11 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         fragmentTransaction.commit()
     }
 
+   fun updateStationShelf(stations: ArrayList<Station>) {
+        val stationsMap = stations.associateBy { it.id_station }.toMutableMap()
+        stationShelf.updateStorage(stationsMap)
+    }
+
     private fun displayMapFragment() {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.a_fragment_layout, supportMapFragment)
