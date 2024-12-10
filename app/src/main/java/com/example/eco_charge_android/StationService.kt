@@ -15,7 +15,6 @@ interface StationService {
     @GET("favorites")
     fun getFavorites(): Call<List<Station>>
 
-    @PUT("favorites/:id")
-    fun toggleFavorite(id: String, isFavorite: Boolean)
-
+    @PUT("stations/favorites/{id}")
+    fun toggleFavorite(@Path("id") id: String, @Body body: FavoriteRequest): Call<Void>
 }

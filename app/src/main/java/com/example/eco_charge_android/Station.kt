@@ -18,6 +18,6 @@ data class Station(
     val code_insee_commune: String,
     val region: String,
     val departement: String,
-    val favorite: Boolean
+    var favorite: Boolean
 ): Serializable
 

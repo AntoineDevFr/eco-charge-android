@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private val stationService = retrofit.create(StationService::class.java)
     private val stationShelf = StationShelf()
-    private val favoriteShelf = StationShelf()
 
     private val btnListe: Button by lazy {
         findViewById(R.id.liste_menu)

@@ -21,6 +21,15 @@ class StationAdapter(
         val station = stations[position]
         holder.txvName.text = station.n_operateur
         holder.txvAdresse.text = station.ad_station
+
+        //Fav
+        val drawableRes = if (station.favorite) {
+            R.drawable.like
+        } else {
+            R.drawable.unlike
+        }
+        holder.txvFavorite.setImageResource(drawableRes)
+
         val info = station.accessibilite + ", " + station.acces_recharge
         holder.txvInfo.text = info
         if(station.type_prise == "COMBO") {

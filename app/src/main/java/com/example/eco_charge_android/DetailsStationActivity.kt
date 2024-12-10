@@ -1,8 +1,11 @@
 package com.example.eco_charge_android
 
 import android.os.Bundle
+import android.util.Log
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -13,8 +16,20 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class DetailsStationActivity : AppCompatActivity(), OnMapReadyCallback {
+    private val retrofit = Retrofit.Builder()
+        .addConverterFactory(GsonConverterFactory.create())
+        .baseUrl(SERVER_BASE_URL)
+        .build()
+
+    private val stationService = retrofit.create(StationService::class.java)
+
     private lateinit var station: Station
     private lateinit var n_station: TextView
     private lateinit var n_enseigne: TextView
@@ -31,6 +46,7 @@ class DetailsStationActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var region: TextView
     private lateinit var departement: TextView
     private lateinit var imageview: ImageView
+    private lateinit var btnAddFav: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +75,7 @@ class DetailsStationActivity : AppCompatActivity(), OnMapReadyCallback {
         region = findViewById(R.id.region)
         departement = findViewById(R.id.departement)
         imageview = findViewById(R.id.imageView)
+        btnAddFav = findViewById(R.id.bt_ajouter_fav)
 
         n_station.text = station.n_station
         n_enseigne.text = station.n_enseigne
@@ -96,6 +113,35 @@ class DetailsStationActivity : AppCompatActivity(), OnMapReadyCallback {
         else {
             imageview.setImageResource(R.drawable.ef)
         }
+
+        //Button add favorite
+        btnAddFav.setOnClickListener {
+            val isFavorite = !station.favorite
+            val body = FavoriteRequest(isFavorite)
+
+            stationService.toggleFavorite(station.id_station, body).enqueue(object : Callback<Void> {
+                override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                    Log.d("Retrofit", "Request URL: $SERVER_BASE_URL")
+                    Log.d("Retrofit", "Request Body: $body")
+                    Log.d("Retrofit", "Response Code: ${response.code()}")
+                    Log.d("Retrofit", "Response Message: ${response.message()}")
+
+                    if (response.isSuccessful) {
+                        station.favorite = isFavorite
+                        Toast.makeText(baseContext, "Favori mis à jour avec succès", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(baseContext, "Erreur lors de la mise à jour", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<Void>, t: Throwable) {
+                    Log.e("Retrofit", "Failure: ${t.message}")
+                    Toast.makeText(baseContext, "Erreur réseau : ${t.message}", Toast.LENGTH_SHORT).show()
+                }
+            })
+        }
+
+
     }
 
     override fun onMapReady(p0: GoogleMap) {
