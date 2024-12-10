@@ -152,6 +152,25 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         fragmentTransaction.commit()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        Log.e("debug","${super.onCreateOptionsMenu(menu)}")
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_refresh -> {
+
+                true
+            }
+            // If we got here, the user's action was not recognized.
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+
+
     override fun onMapReady(mMap: GoogleMap) {
         for(s:Station in stationShelf.getAllStations()) {
             mMap.addMarker(
