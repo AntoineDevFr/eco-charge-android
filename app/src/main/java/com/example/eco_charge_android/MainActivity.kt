@@ -147,6 +147,59 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         fragmentTransaction.commit()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.btn_refresh -> {
+                stationService.getAllStations().enqueue(object : Callback<List<Station>> {
+                    override fun onResponse(
+                        call: Call<List<Station>>,
+                        response: Response<List<Station>>
+                    ) {
+                        val allStations: List<Station>? = response.body()
+                        if (!allStations.isNullOrEmpty()) {
+                            for(b:Station in allStations) {
+                                stationShelf.addStation(b)
+                            }
+                            Log.e("debug","Liste de stations récupérée")
+                            Toast.makeText(baseContext, "Liste de stations récupérée", Toast.LENGTH_SHORT).show()
+
+                            val res = stationShelf.getBoolStation()
+                            for(i:String in res) {
+                                Log.e("debug", i)
+                            }
+                            displayStationListFragment()
+
+                        }
+                        else if (allStations !== null  && allStations.isEmpty()) {
+                            Log.e("debug","Liste de stations récupérée vide")
+                            Toast.makeText(baseContext, "Liste de stations récupérée vide", Toast.LENGTH_SHORT).show()
+
+                        }
+                        else {
+                            Log.e("debug","Liste de stations récupérée null")
+                            Toast.makeText(baseContext, "Liste de stations récupérée null", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<List<Station>>, t: Throwable) {
+                        Log.e("debug","Erreur dans la récupération des stations")
+                        Toast.makeText(baseContext, "Erreur dans la récupération des stations", Toast.LENGTH_SHORT).show()
+                    }
+                })
+                true
+            }
+            // If we got here, the user's action was not recognized.
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+
+
     override fun onMapReady(mMap: GoogleMap) {
         for(s:Station in stationShelf.getAllStations()) {
             mMap.addMarker(
