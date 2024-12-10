@@ -50,6 +50,7 @@ class DetailsStationActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var imageview: ImageView
     private lateinit var btnAddFav: Button
     private lateinit var imageLike: ImageView
+    private lateinit var backButton: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,6 +81,7 @@ class DetailsStationActivity : AppCompatActivity(), OnMapReadyCallback {
         imageview = findViewById(R.id.imageView)
         btnAddFav = findViewById(R.id.bt_ajouter_fav)
         imageLike = findViewById(R.id.like_image)
+        backButton = findViewById(R.id.retour)
 
         n_station.text = station.n_station
         n_enseigne.text = station.n_enseigne
@@ -102,6 +104,7 @@ class DetailsStationActivity : AppCompatActivity(), OnMapReadyCallback {
             R.drawable.unlike
         }
         imageLike.setImageResource(drawableRes)
+        backButton.setImageResource(R.drawable.baseline_arrow_back_24)
 
         if(station.type_prise == "COMBO") {
             imageview.setImageResource(R.drawable.t2)
@@ -169,6 +172,9 @@ class DetailsStationActivity : AppCompatActivity(), OnMapReadyCallback {
             toggleFavorite()
         }
 
+        backButton.setOnClickListener {
+            finish()
+        }
 
     }
 

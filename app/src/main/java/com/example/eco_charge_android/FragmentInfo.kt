@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +21,8 @@ private const val STATIONS = "stations"
  */
 class FragmentInfo : Fragment() {
     private lateinit var stations: ArrayList<Station>
+    private lateinit var opendataImage: ImageView
+    private lateinit var minesImage: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,13 +36,15 @@ class FragmentInfo : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_info, container, false)
+
         val txvDataApp = rootView.findViewById<TextView>(R.id.r_data_app)
-        val dataApp = "Lien des données : https://data.opendatasoft.com/explore/dataset/bornes-irve%40reseaux-energies-rte/table/?disjunctive.region&disjunctive.departement&sort=n_amenageur&location=6,47.1449,-0.38452&basemap=jawg.streets\n\n" +
-                "Application crée dans un but éducatif par Antoine Banchet et Elliot Galaor\n\n" +
-                "Github App : https://github.com/AntoineDevFr/eco-charge-android\n" +
-                "Github Serveur : https://github.com/AntoineDevFr/eco-charge-web"
-        txvDataApp.text = dataApp
         txvDataApp.movementMethod = LinkMovementMethod.getInstance()
+
+        opendataImage = rootView.findViewById(R.id.opendata_View)
+        opendataImage.setImageResource(R.drawable.opendata)
+
+        minesImage = rootView.findViewById(R.id.mines_view)
+        minesImage.setImageResource(R.drawable.mines)
         return rootView
     }
 

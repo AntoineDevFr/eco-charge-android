@@ -14,7 +14,12 @@
     <string name="text_insee_commune">Insee commune :</string>
     <string name="text_region">Region :</string>
     <string name="text_departement">Departement :</string>
-    <string name="data_app_text">Lien des données : https://data.opendatasoft.com/explore/dataset/bornes-irve%40reseaux-energies-rte/table/?disjunctive.region&amp;disjunctive.departement&amp;sort=n_amenageur&amp;location=6,47.1449,-0.38452&amp;basemap=jawg.streets\n\nApplication crée dans un but éducatif par Antoine Banchet et Elliot Galaor\n\nGithub App : https://github.com/AntoineDevFr/eco-charge-android\nGithub Serveur : https://github.com/AntoineDevFr/eco-charge-web</string>
+    <string name="text_lien">Données :</string>
+    <string name="text_github">Github App :</string>
+    <string name="lien_github">https://github.com/AntoineDevFr/eco-charge-android</string>
+    <string name="text_github_serveur">Github Serveur :</string>
+    <string name="lien_github_serveur">https://github.com/AntoineDevFr/eco-charge-web</string>
+    <string name="lien_données">https://data.opendatasoft.com/explore/dataset/bornes-irve%40reseaux-energies-rte/table/?disjunctive.region&amp;disjunctive.departement&amp;sort=n_amenageur&amp;location=6,47.1449,-0.38452&amp;basemap=jawg.streets</string>
 
 </resources>
 
