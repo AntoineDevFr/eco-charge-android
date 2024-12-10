@@ -57,7 +57,6 @@ class StationAdapter(
         holder.itemView.setOnClickListener {
             onItemClick(station) // Appelle la fonction onItemClick avec la station cliquée
         }
-
     }
 
     override fun getItemCount(): Int {

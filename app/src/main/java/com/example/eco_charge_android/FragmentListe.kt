@@ -32,6 +32,8 @@ class FragmentListe : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             stations = it.getSerializable(STATIONS) as ArrayList<Station>
+
+            stations.sortByDescending { it.favorite }
         }
     }
 
@@ -44,15 +46,13 @@ class FragmentListe : Fragment() {
     }
 
     private fun updateStationInList(updatedStation: Station) {
-        // Trouver l'index de la station à mettre à jour
         val index = stations.indexOfFirst { it.id_station == updatedStation.id_station }
 
         if (index != -1) {
-            // Remplacer la station par la version mise à jour
             stations[index] = updatedStation
-            // Notifier l'adaptateur de la mise à jour de l'élément
-            stationAdapter.notifyItemChanged(index)
-        }
+
+            stations.sortByDescending { it.favorite }
+            stationAdapter.notifyDataSetChanged()        }
     }
 
 
