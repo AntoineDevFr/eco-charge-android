@@ -1,6 +1,5 @@
 package com.example.eco_charge_android
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -8,7 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -27,6 +26,7 @@ class FragmentListe : Fragment() {
     private lateinit var stations: ArrayList<Station>
     private lateinit var stationAdapter: StationAdapter
     private lateinit var recyclerView: RecyclerView
+    private lateinit var searchView: SearchView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,7 +84,34 @@ class FragmentListe : Fragment() {
             )
         )
 
+        searchView = rootView.findViewById(R.id.search_view)
+        searchView.clearFocus()
+        searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                // Ignorer la soumission du texte
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                // Filtrer les résultats
+                filterStations(newText)
+                return true
+            }
+        })
+
         return rootView
+    }
+
+    private fun filterStations(query: String?) {
+        val filteredList = if (query.isNullOrEmpty()) {
+            stations
+        } else {
+            stations.filter { station ->
+                station.n_station.contains(query, ignoreCase = true)
+            }
+        }
+
+        stationAdapter.updateList(ArrayList(filteredList))
     }
 
     companion object {

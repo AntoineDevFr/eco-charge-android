@@ -1,14 +1,8 @@
 package com.example.eco_charge_android
 
-import com.google.android.gms.maps.model.LatLng
-
 class StationShelf {
     private var storage = mutableMapOf<String, Station>()
     private val storageBool = ArrayList<String>()
-
-    fun getSize(): Int {
-        return storage.size
-    }
 
     fun addStation(station: Station) {
         storage[station.id_station] = station
@@ -18,8 +12,6 @@ class StationShelf {
     fun getBoolStation(): ArrayList<String> {
         return ArrayList(storageBool.toSet())
     }
-
-
 
     fun getStation(idStation: String): Station {
         return storage[idStation] ?: throw Exception("Station not found")

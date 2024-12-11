@@ -1,8 +1,5 @@
 package com.example.eco_charge_android
 
-import android.annotation.SuppressLint
-import android.graphics.drawable.Drawable
-import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -61,6 +58,11 @@ class StationAdapter(
 
     override fun getItemCount(): Int {
         return stations.size
+    }
+
+    fun updateList(newList: ArrayList<Station>) {
+        stations = newList
+        notifyDataSetChanged()
     }
 
 }
