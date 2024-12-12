@@ -4,6 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
+/**
+ * Adaptateur pour gérer l'affichage des stations dans une RecyclerView.
+ * @param stations Liste des stations à afficher.
+ * @param onItemClick Callback pour gérer les clics sur les éléments de la liste.
+ */
 class StationAdapter(
     private var stations: ArrayList<Station>,
     private val onItemClick: (Station) -> Unit
@@ -14,12 +19,15 @@ class StationAdapter(
         return StationViewHolder(rowView)
     }
 
+    /**
+     * Lie les données d'une station à un ViewHolder.
+     */
     override fun onBindViewHolder(holder: StationViewHolder, position: Int) {
         val station = stations[position]
         holder.txvName.text = station.n_station
         holder.txvAdresse.text = station.ad_station
 
-        //Fav
+        // Met à jour l'icône de favori.
         val drawableRes = if (station.favorite) {
             R.drawable.like
         } else {
@@ -29,37 +37,36 @@ class StationAdapter(
 
         val info = station.accessibilite + ", " + station.acces_recharge
         holder.txvInfo.text = info
-        if(station.type_prise == "COMBO") {
-            holder.txvPrise.setImageResource(R.drawable.t2)
-        }
-        else if(station.type_prise == "T2-T3-EF" || station.type_prise == "T3-EF-T2" || station.type_prise == "EF-T2-T3") {
-            holder.txvPrise.setImageResource(R.drawable.t2_t3_ef)
-        }
-        else if(station.type_prise == "CHADEMO" || station.type_prise == "Chademo") {
-            holder.txvPrise.setImageResource(R.drawable.chademo)
-        }
-        else if(station.type_prise == "T2-E/F" || station.type_prise == "EF, T2" || station.type_prise == "EF - T2") {
-            holder.txvPrise.setImageResource(R.drawable.t2_ef)
-        }
-        else if(station.type_prise == "T2") {
-            holder.txvPrise.setImageResource(R.drawable.t2)
-        }
-        else if(station.type_prise == "T2P") {
-            holder.txvPrise.setImageResource(R.drawable.t2p)
-        }
-        else {
-            holder.txvPrise.setImageResource(R.drawable.ef)
-        }
 
+        // Configure l'image en fonction du type de prise.
+        val typePriseRes = when (station.type_prise) {
+            "COMBO" -> R.drawable.t2
+            "T2-T3-EF", "T3-EF-T2", "EF-T2-T3" -> R.drawable.t2_t3_ef
+            "CHADEMO", "Chademo" -> R.drawable.chademo
+            "T2-E/F", "EF, T2", "EF - T2" -> R.drawable.t2_ef
+            "T2" -> R.drawable.t2
+            "T2P" -> R.drawable.t2p
+            else -> R.drawable.ef
+        }
+        holder.txvPrise.setImageResource(typePriseRes)
+
+        // Gère les clics sur l'élément de la liste.
         holder.itemView.setOnClickListener {
             onItemClick(station) // Appelle la fonction onItemClick avec la station cliquée
         }
     }
 
+    /**
+     * Retourne le nombre total d'éléments dans la liste.
+     */
     override fun getItemCount(): Int {
         return stations.size
     }
 
+    /**
+     * Met à jour la liste des stations et rafraîchit l'affichage.
+     * @param newList Nouvelle liste des stations.
+     */
     fun updateList(newList: ArrayList<Station>) {
         stations = newList
         notifyDataSetChanged()

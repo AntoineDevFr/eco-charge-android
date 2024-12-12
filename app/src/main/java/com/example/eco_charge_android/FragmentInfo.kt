@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+// Constante utilisée pour passer des paramètres à l'instance du fragment
 private const val STATIONS = "stations"
 
 /**
@@ -22,6 +22,9 @@ class FragmentInfo : Fragment() {
     private lateinit var opendataImage: ImageView
     private lateinit var minesImage: ImageView
 
+    /**
+     * Initialisation du fragment. Récupère la liste des stations.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -29,6 +32,10 @@ class FragmentInfo : Fragment() {
         }
     }
 
+    /**
+     * Crée et retourne la vue associée au fragment.
+     * Initialise les composants visuels (TextView et ImageView) et configure leur contenu.
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

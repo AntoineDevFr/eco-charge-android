@@ -28,15 +28,21 @@ class FragmentListe : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var searchView: SearchView
 
+    /**
+     * Initialisation du fragment. Trie la liste des stations en fonction de leur statut favori.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             stations = it.getSerializable(STATIONS) as ArrayList<Station>
-
+            // Tri des stations pour afficher les favoris en premier
             stations.sortByDescending { it.favorite }
         }
     }
 
+    /**
+     * Gestion des résultats de l'activité DetailsStationActivity lancée depuis ce fragment, permettant la mise à jour des stations favorites.
+     */
     private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         if (result.resultCode == Activity.RESULT_OK) {
             val updatedStation = result.data?.getSerializableExtra(UPDATED_STATION) as Station
@@ -45,22 +51,28 @@ class FragmentListe : Fragment() {
         }
     }
 
+    /**
+     * Met à jour une station existante dans la liste et réorganise les données dans l'adapter.
+     */
     private fun updateStationInList(updatedStation: Station) {
         val index = stations.indexOfFirst { it.id_station == updatedStation.id_station }
 
         if (index != -1) {
             stations[index] = updatedStation
-
+            // Trie les stations pour afficher les favoris en premier
             stations.sortByDescending { it.favorite }
-
+            // Met à jour l'affichage global dans l'activité principale (stationShelf)
             (activity as? MainActivity)?.updateStationShelf(stations)
-
+            // Notifie l'adaptateur des changements
             stationAdapter.notifyDataSetChanged()
 
         }
     }
 
-
+    /**
+     * Crée et retourne la vue associée au fragment.
+     * Initialise le RecyclerView et le SearchView.
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -84,6 +96,7 @@ class FragmentListe : Fragment() {
             )
         )
 
+        // Initialisation du SearchView pour la recherche des stations
         searchView = rootView.findViewById(R.id.search_view)
         searchView.clearFocus()
         searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
@@ -102,6 +115,9 @@ class FragmentListe : Fragment() {
         return rootView
     }
 
+    /**
+     * Filtre la liste des stations en fonction de la requête saisie par l'utilisateur.
+     */
     private fun filterStations(query: String?) {
         val filteredList = if (query.isNullOrEmpty()) {
             stations
@@ -110,7 +126,7 @@ class FragmentListe : Fragment() {
                 station.n_station.contains(query, ignoreCase = true)
             }
         }
-
+        // Met à jour l'adaptateur avec la liste filtrée
         stationAdapter.updateList(ArrayList(filteredList))
     }
 

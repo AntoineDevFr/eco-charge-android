@@ -1,6 +1,5 @@
 package com.example.eco_charge_android
 
-
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -21,19 +20,28 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-
+// URL de base pour le serveur utilisé par l'application.
 const val SERVER_BASE_URL = "https://eco-charge.cleverapps.io"
 
-
+/**
+ * Activité principale de l'application.
+ * Elle gère l'interface utilisateur et la navigation entre les fragments (liste, carte, informations).
+ * Implémente [OnMapReadyCallback] pour initialiser et gérer la carte Google Maps.
+ */
 class MainActivity : AppCompatActivity(), OnMapReadyCallback {
-
+    // Fragment de carte pour afficher Google Maps.
     private lateinit var supportMapFragment: SupportMapFragment
+
+    // Configuration Retrofit pour la communication avec l'API REST.
     private val retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
         .baseUrl(SERVER_BASE_URL)
         .build()
 
+    // Service pour les opérations liées aux stations de recharge.
     private val stationService = retrofit.create(StationService::class.java)
+
+    // Objet pour stocker et gérer les stations localement.
     private val stationShelf = StationShelf()
 
     private val btnListe: Button by lazy {
@@ -58,10 +66,12 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         supportMapFragment = SupportMapFragment.newInstance()
         supportMapFragment.getMapAsync(this)
 
+        // Configuration de la barre d'outils.
         val toolbar: Toolbar = findViewById<Toolbar>(R.id.toolbar3)
         toolbar.setTitle("")
         setSupportActionBar(toolbar)
 
+        // Récupération des données des stations via l'API.
         stationService.getAllStations().enqueue(object : Callback<List<Station>> {
             override fun onResponse(
                 call: Call<List<Station>>,
@@ -99,9 +109,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         })
 
-
-        //stationService.getFavorites().enqueue()
-
+        // Gestion des clics sur les boutons pour naviguer entre les fragments.
         btnListe.setOnClickListener {
             if (!boolListe) {
                 boolListe = true
@@ -128,7 +136,9 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-
+    /**
+     * Affiche le fragment de la liste des stations.
+     */
     private fun displayStationListFragment() {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         val fragmentListe = FragmentListe.newInstance(stationShelf.getAllStations())
@@ -136,11 +146,15 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         fragmentTransaction.commit()
     }
 
-   fun updateStationShelf(stations: ArrayList<Station>) {
+
+    fun updateStationShelf(stations: ArrayList<Station>) {
         val stationsMap = stations.associateBy { it.id_station }.toMutableMap()
         stationShelf.updateStorage(stationsMap)
     }
 
+    /**
+     * Affiche le fragment de la carte Google Maps.
+     */
     private fun displayMapFragment() {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.a_fragment_layout, supportMapFragment)
@@ -155,11 +169,17 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         fragmentTransaction.commit()
     }
 
+    /**
+     * Affiche le fragment d'informations supplémentaires.
+     */
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
 
+    /**
+     * Rafraichir la liste de données
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_refresh -> {
@@ -201,13 +221,14 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                 })
                 true
             }
-            // If we got here, the user's action was not recognized.
             else -> super.onOptionsItemSelected(item)
         }
     }
 
 
-
+    /**
+     * Callback appelé lorsque la carte est prête. Ajoute des marqueurs pour chaque station.
+     */
     override fun onMapReady(mMap: GoogleMap) {
         for(s:Station in stationShelf.getAllStations()) {
             mMap.addMarker(

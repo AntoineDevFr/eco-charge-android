@@ -29,6 +29,7 @@ class DetailsStationActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private val stationService = retrofit.create(StationService::class.java)
 
+    // Déclaration des variables
     private lateinit var station: Station
     private lateinit var n_station: TextView
     private lateinit var n_enseigne: TextView
@@ -49,18 +50,23 @@ class DetailsStationActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var imageLike: ImageView
     private lateinit var backButton: ImageView
 
+    /**
+     * Méthode appelée lors de la création de l'activité.
+     * Initialise les composants de l'interface utilisateur et configure les événements.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details_station)
 
+        // Configuration de la carte et récupération des données de la station
         val supportMapFragment = SupportMapFragment.newInstance()
         supportFragmentManager.beginTransaction()
             .replace(R.id.f_map_details, supportMapFragment)
             .commit()
         supportMapFragment.getMapAsync(this)
-
         station = intent.getSerializableExtra("DATA_KEY") as Station
 
+        // Liaison des composants UI avec leurs IDs
         n_station = findViewById(R.id.n_station)
         n_enseigne = findViewById(R.id.n_enseigne)
         id_station = findViewById(R.id.id_station)
@@ -80,6 +86,7 @@ class DetailsStationActivity : AppCompatActivity(), OnMapReadyCallback {
         imageLike = findViewById(R.id.like_image)
         backButton = findViewById(R.id.retour)
 
+        // Configuration des données UI
         n_station.text = station.n_station
         n_enseigne.text = station.n_enseigne
         id_station.text = station.id_station
@@ -95,6 +102,7 @@ class DetailsStationActivity : AppCompatActivity(), OnMapReadyCallback {
         region.text = station.region ?: "N/A"
         departement.text = station.departement ?: "N/A"
 
+        // Configuration des icônes et images en fonction des données
         val drawableRes = if (station.favorite) {
             R.drawable.like
         } else {
@@ -125,11 +133,12 @@ class DetailsStationActivity : AppCompatActivity(), OnMapReadyCallback {
             imageview.setImageResource(R.drawable.ef)
         }
 
-        //Favorite
+        // Configuration des favoris
         val toggleFavorite = {
             val isFavorite = !station.favorite
             val body = FavoriteRequest(isFavorite)
 
+            // Gestion des favoris via une requête PUT
             stationService.toggleFavorite(station.id_station, body).enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     if (response.isSuccessful) {
@@ -161,20 +170,15 @@ class DetailsStationActivity : AppCompatActivity(), OnMapReadyCallback {
             })
         }
 
-        btnAddFav.setOnClickListener {
-            toggleFavorite()
-        }
-
-        imageLike.setOnClickListener {
-            toggleFavorite()
-        }
-
-        backButton.setOnClickListener {
-            finish()
-        }
-
+        btnAddFav.setOnClickListener { toggleFavorite() }
+        imageLike.setOnClickListener { toggleFavorite() }
+        backButton.setOnClickListener { finish() }
     }
 
+    /**
+     * Méthode appelée lorsque la carte est prête.
+     * Ajoute un marqueur pour afficher la position de la station sur la carte.
+     */
     override fun onMapReady(p0: GoogleMap) {
         val position = LatLng(station.geo_point_borne.lat,station.geo_point_borne.lon)
         p0.addMarker(
