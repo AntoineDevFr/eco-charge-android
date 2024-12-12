@@ -1,4 +1,4 @@
-package com.example.eco_charge_android
+package com.example.eco_charge_android.model
 
 // Définition de la classe StationShelf qui gère le stockage des stations de charge
 class StationShelf {

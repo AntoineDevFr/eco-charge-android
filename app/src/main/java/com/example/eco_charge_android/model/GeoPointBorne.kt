@@ -1,4 +1,4 @@
-package com.example.eco_charge_android
+package com.example.eco_charge_android.model
 
 import java.io.Serializable
 /**

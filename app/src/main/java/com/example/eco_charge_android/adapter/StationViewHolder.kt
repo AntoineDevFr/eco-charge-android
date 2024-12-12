@@ -1,9 +1,10 @@
-package com.example.eco_charge_android
+package com.example.eco_charge_android.adapter
 
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.eco_charge_android.R
 
 /**
  * Définition de la classe StationViewHolder qui représente un élément de la liste dans un RecyclerView

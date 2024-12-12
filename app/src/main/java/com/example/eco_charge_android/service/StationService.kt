@@ -1,5 +1,7 @@
-package com.example.eco_charge_android
+package com.example.eco_charge_android.service
 
+import com.example.eco_charge_android.model.FavoriteRequest
+import com.example.eco_charge_android.model.Station
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET

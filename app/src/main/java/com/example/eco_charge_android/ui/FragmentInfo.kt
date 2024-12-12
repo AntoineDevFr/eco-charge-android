@@ -1,4 +1,4 @@
-package com.example.eco_charge_android
+package com.example.eco_charge_android.ui
 
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.eco_charge_android.R
+import com.example.eco_charge_android.model.Station
 
 // Constante utilisée pour passer des paramètres à l'instance du fragment
 private const val STATIONS = "stations"

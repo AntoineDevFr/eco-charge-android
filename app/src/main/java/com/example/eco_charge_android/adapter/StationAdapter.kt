@@ -1,8 +1,10 @@
-package com.example.eco_charge_android
+package com.example.eco_charge_android.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.eco_charge_android.R
+import com.example.eco_charge_android.model.Station
 
 /**
  * Adaptateur pour gérer l'affichage des stations dans une RecyclerView.

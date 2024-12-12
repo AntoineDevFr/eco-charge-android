@@ -1,4 +1,4 @@
-package com.example.eco_charge_android
+package com.example.eco_charge_android.ui
 
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +7,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.eco_charge_android.model.FavoriteRequest
+import com.example.eco_charge_android.R
+import com.example.eco_charge_android.model.Station
+import com.example.eco_charge_android.service.StationService
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback

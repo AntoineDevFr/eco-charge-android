@@ -1,4 +1,4 @@
-package com.example.eco_charge_android
+package com.example.eco_charge_android.ui
 
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +8,10 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.example.eco_charge_android.R
+import com.example.eco_charge_android.model.Station
+import com.example.eco_charge_android.service.StationService
+import com.example.eco_charge_android.model.StationShelf
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -79,7 +83,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             ) {
                 val allStations: List<Station>? = response.body()
                 if (!allStations.isNullOrEmpty()) {
-                    for(b:Station in allStations) {
+                    for(b: Station in allStations) {
                         stationShelf.addStation(b)
                     }
                     Log.e("debug","Liste de stations récupérée")
@@ -190,7 +194,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                     ) {
                         val allStations: List<Station>? = response.body()
                         if (!allStations.isNullOrEmpty()) {
-                            for(b:Station in allStations) {
+                            for(b: Station in allStations) {
                                 stationShelf.addStation(b)
                             }
                             Log.e("debug","Liste de stations récupérée")
@@ -230,7 +234,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
      * Callback appelé lorsque la carte est prête. Ajoute des marqueurs pour chaque station.
      */
     override fun onMapReady(mMap: GoogleMap) {
-        for(s:Station in stationShelf.getAllStations()) {
+        for(s: Station in stationShelf.getAllStations()) {
             mMap.addMarker(
                 MarkerOptions()
                     .position(LatLng(s.geo_point_borne.lat,s.geo_point_borne.lon))

@@ -1,4 +1,4 @@
-package com.example.eco_charge_android
+package com.example.eco_charge_android.ui
 
 import android.app.Activity
 import android.content.Intent
@@ -13,6 +13,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.eco_charge_android.R
+import com.example.eco_charge_android.adapter.StationAdapter
+import com.example.eco_charge_android.model.Station
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val STATIONS = "stations"
