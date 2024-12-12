@@ -20,6 +20,12 @@ EcoCharge Android est une application mobile qui permet aux utilisateurs de loca
 ### 4. **Rafraîchissement des données**
 - Fonctionnalité permettant de recharger la liste des stations depuis le backend.
 
+### 5. **Mise en favoris**
+- Fonctionnalité permettant de mettre en favoris des stations.
+
+### 6. **Rechercher une station selon son nom**
+- Fonctionnalité permettant recherche une station en fonction de son nom.
+
 ---
 
 ## Technologies utilisées
@@ -94,6 +100,10 @@ EcoCharge Android est une application mobile qui permet aux utilisateurs de loca
 
 ### Rafraîchissement des données
 - Utilisez l'icône de rafraîchissement dans la barre d'action pour recharger les stations depuis le serveur.
+
+### Mise en favoris d'une station
+- Sélectionner une station dans la liste.
+- Cliquez sur l'icône en forme de cœur/bouton en base de la page pour ajouter ou supprimer une station de vos favoris.
 
 ---
 
