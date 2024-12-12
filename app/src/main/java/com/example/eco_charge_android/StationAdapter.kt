@@ -16,7 +16,7 @@ class StationAdapter(
 
     override fun onBindViewHolder(holder: StationViewHolder, position: Int) {
         val station = stations[position]
-        holder.txvName.text = station.n_operateur
+        holder.txvName.text = station.n_station
         holder.txvAdresse.text = station.ad_station
 
         //Fav
